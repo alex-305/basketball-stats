@@ -1,7 +1,9 @@
 package main
-import (
-	"log"
-)
+
 func main() {
-	log.Printf("Hello")
+	server := CreateServer("localhost:8080")
+	err := server.Start()
+	if err != nil {
+		panic(err)
+	}
 }
