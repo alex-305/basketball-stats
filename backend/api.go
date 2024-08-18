@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/alex-305/basketball-stats/backend/db"
 	"github.com/alex-305/basketball-stats/backend/handlers"
 	gHandlers "github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
@@ -11,11 +12,13 @@ import (
 
 type APIServer struct {
 	ListenAddress string
+	DB            *db.DB
 }
 
-func CreateServer(listenAddress string) APIServer {
+func CreateServer(listenAddress string, db *db.DB) APIServer {
 	server := APIServer{
 		ListenAddress: listenAddress,
+		DB:            db,
 	}
 	return server
 }
@@ -35,6 +38,15 @@ func (s *APIServer) Start() error {
 	return http.ListenAndServe(s.ListenAddress, corsHandler)
 }
 
+type handlerFunc func(http.ResponseWriter, *http.Request, *db.DB)
+type httpFunc func(http.ResponseWriter, *http.Request)
+
+func makeHttp(fn handlerFunc, d *db.DB) httpFunc {
+	return (func(w http.ResponseWriter, r *http.Request) {
+		fn(w, r, d)
+	})
+}
+
 func (s *APIServer) defineRoutes(r *mux.Router) {
-	r.HandleFunc("/player", handlers.HandlePlayer)
+	r.HandleFunc("/player/{id}", makeHttp(handlers.HandlePlayer, s.DB))
 }

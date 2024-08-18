@@ -1,9 +1,24 @@
 package main
 
+import (
+	"log"
+
+	"github.com/alex-305/basketball-stats/backend/db"
+)
+
 func main() {
-	server := CreateServer("localhost:8080")
-	err := server.Start()
+
+	db, err := db.Connect()
+
 	if err != nil {
-		panic(err)
+		log.Fatal("Could not connect to db")
 	}
+
+	server := CreateServer("localhost:8080", db)
+	err = server.Start()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer db.Close()
 }
