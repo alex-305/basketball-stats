@@ -8,11 +8,11 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func HandlePlayer(w http.ResponseWriter, r *http.Request, db *db.DB) {
+func GetPlayerSeasons(w http.ResponseWriter, r *http.Request, db *db.DB) {
 	vars := mux.Vars(r)
 	id := vars["id"]
 
-	player, err := db.GetPlayer(id)
+	player, err := db.GetPlayerSeasons(id)
 
 	if err != nil {
 		http.Error(w, "Player does not exist", http.StatusNotFound)
@@ -27,4 +27,8 @@ func HandlePlayer(w http.ResponseWriter, r *http.Request, db *db.DB) {
 	}
 
 	w.Write(res)
+}
+
+func GetRandPlayerSeason(w http.ResponseWriter, r *http.Request, db *db.DB) {
+
 }
