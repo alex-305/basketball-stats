@@ -11,7 +11,7 @@ type DB struct {
 }
 
 func Connect() (*DB, error) {
-	db, err := sql.Open("sqlite3", "./nba.sqlite")
+	db, err := sql.Open("sqlite3", "./nba.db")
 	if err != nil {
 		return &DB{}, err
 	}
