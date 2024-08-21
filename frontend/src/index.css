@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  font-family: monospace;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -10,40 +14,27 @@ table {
   color: #333;
 }
 
-/* Header Styling */
 thead th {
-  background-color: #4CAF50; /* Primary color */
-  color: white;
-  text-align: left;
-  padding: 12px 15px;
+  text-align: center;
+  padding: 4px 8px;
   font-weight: bold;
 }
 
-/* Row Styling */
 tbody tr {
   border-bottom: 1px solid #dddddd;
 }
 
-tbody tr:nth-child(even) {
-  background-color: #f2f2f2; /* Alternating row color */
-}
-
 tbody tr:hover {
-  background-color: #f1f1f1; /* Hover effect */
+  background-color: #f1f1f1;
 }
 
-/* Cell Styling */
 td, th {
-  padding: 12px 15px;
-  text-align: left;
-}
-
-/* Responsive Text */
-td, th {
+  padding: 3px 5px;
+  text-align: center;
   word-wrap: break-word;
+  border: none;
 }
 
-/* Table Borders */
 table, th, td {
-  border: 1px solid #dddddd;
+  border: none;
 }

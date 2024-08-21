@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
 import SERVER_URL from "../scripts/server"
-import PlayerSeasonsTable from "./PlayerSeasonsTable"
+import PlayerSeasonsTable from "../components/PlayerSeasonsTable"
+import PlayerCard from "../components/PlayerCard"
 
-function GuessingGame() {
+function Player() {
+    const { id } = useParams()
 
     const [data, setData] = useState(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
     useEffect(() => {
-        async function fetchRandPlayerSeasons() {
+        async function fetchPlayer() {
             try {
-                const response = await fetch(SERVER_URL+'/rand/player/seasons')
+                const response = await fetch(SERVER_URL+'/player/'+ id +'/seasons')
                 if(!response.ok) {
                     throw new Error(response.statusText)
                 }
@@ -26,11 +29,10 @@ function GuessingGame() {
                 setLoading(false)
             }
         }
-        fetchRandPlayerSeasons()
+        fetchPlayer()
     }, [])
     if(loading) return <p>Loading...</p>
     if(error) return <p>Error</p>
-
     return (
         <>
         <div className="px-20">
@@ -40,5 +42,4 @@ function GuessingGame() {
     )
 }
 
-
-export default GuessingGame
+export default Player

@@ -8,10 +8,12 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#ff6b81'
+          DEFAULT: '#ff6b81',
+          light: '#fc90a0',
         },
         secondary: {
-          DEFAULT: '#2f3542'
+          DEFAULT: '#2f3542',
+          light: '#6d7891'
         }
       },
       textShadow: {
