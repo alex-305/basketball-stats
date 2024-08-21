@@ -1,3 +1,5 @@
 
 **/*.sqlite
 backend/backend
+*.db
+**/*.db
