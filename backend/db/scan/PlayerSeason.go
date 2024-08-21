@@ -12,7 +12,19 @@ func PlayerSeasons(rows *sql.Rows) ([]models.PlayerSeason, error) {
 
 	for rows.Next() {
 		var season models.PlayerSeason
-		err := rows.Scan(&season.PlayerID, &season.TeamID, &season.Year, &season.PointsPerGame, &season.ReboundsPerGame, &season.AssistsPerGame, &season.StealsPerGame, &season.BlocksPerGame)
+		err := rows.Scan(
+			&season.PlayerID,
+			&season.TeamID,
+			&season.Year,
+			&season.PointsPerGame,
+			&season.ReboundsPerGame,
+			&season.AssistsPerGame,
+			&season.StealsPerGame,
+			&season.BlocksPerGame,
+			&season.Position,
+			&season.MinutesPlayed,
+			&season.Age,
+			&season.GamesPlayed)
 
 		if err != nil {
 			return []models.PlayerSeason{}, err

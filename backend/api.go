@@ -30,7 +30,7 @@ func (s *APIServer) Start() error {
 	log.Printf("Server is now listening on address %s", s.ListenAddress)
 
 	corsHandler := gHandlers.CORS(
-		gHandlers.AllowedOrigins([]string{"localhost:5173"}),
+		gHandlers.AllowedOrigins([]string{"localhost:5173", "*"}),
 		gHandlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}),
 		gHandlers.AllowedHeaders([]string{"Content-Type", "Authorization"}),
 	)(router)
