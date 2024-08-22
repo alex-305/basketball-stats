@@ -1,12 +1,41 @@
 import { useEffect, useState } from "react"
-import SERVER_URL from "../scripts/server"
 import type TeamSeason from "../types/TeamSeason"
+import StatsTable from "./StatsTable"
+import Team from "../types/Team"
+import { fetchTeam, fetchTeamSeasons } from "../scripts/fetchTeam"
 
 export type TeamSeasonsTableProps = {
     id:string
 }
 
 function TeamSeasonsTable(props:TeamSeasonsTableProps) {
+
+    const [seasons, setSeasons] = useState<TeamSeason[]>([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
+    const [team, setTeam] = useState<Team | null>(null)
+
+    async function fetch() {
+        try {
+            const res = await fetchTeamSeasons(props.id)
+            setSeasons(res)
+            const res2 = await fetchTeam(props.id)
+            setTeam(res2)
+        } catch(err:any) {
+            console.error(err)
+            setError(err.message)
+        } finally {
+            setLoading(false)
+        }
+    }
+    useEffect(() => {
+        fetch()
+        document.title = team?.Name ?? "Hoop Swish"
+    }, [])
+
+    useEffect(() => {
+        fetch()
+    }, [props.id])
 
     const getBGColor = (year:string) => {
         const gradient = "bg-gradient-to-r"
@@ -17,56 +46,24 @@ function TeamSeasonsTable(props:TeamSeasonsTableProps) {
 
     const labels = ["Team","Year", "Wins", "Losses"]
 
-    const [seasons, setSeasons] = useState<TeamSeason[]>([])
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(null)
-
-    useEffect(() => {
-        async function fetchSeasons() {
-            try {
-                const response = await fetch(SERVER_URL+'/team/'+ props.id +'/seasons')
-                if(!response.ok) {
-                    throw new Error(response.statusText)
-                }
-                console.log(response)
-                const data = await response.json()
-                setSeasons(data)
-
-            } catch(err:any) {
-                setError(err.message)
-                console.error(err)
-            } finally {
-                setLoading(false)
-            }
-        }
-        fetchSeasons()
-    }, [])
-
     if(loading) return <p>Loading...</p>
     if(error) return <p>Error</p>
 
     return (
-        <table className="rounded shadow-xl mb-10 mx-10">
-            <thead>
-                <tr className="bg-gradient-to-r from-cyan-500 to-blue-500">
-                    {labels.map((item) => (
-                    <th className="px-5 py-2 text-white text-mono text-shadow-sm">{item}</th>
-                    ))}
-                </tr>
-            </thead>
-            <tbody>
-            
-            {seasons ? seasons.map((season:TeamSeason) => (
-                <tr key={season.Year} className={getBGColor(season.Year)}>
-                    <th>{season.TeamID}</th>
-                    <th>{season.Year}</th>
-                    <th>{season.Wins}</th>
-                    <th>{season.Losses}</th>
-                </tr>
-            )) 
-            : <></>}
-            </tbody>
-        </table>
+        <>
+            <StatsTable 
+            labels={labels}
+            header={team?.Name ?? ""}>
+                {seasons && seasons.map((season:TeamSeason) => (
+                    <tr key={season.Year} className={getBGColor(season.Year)}>
+                        <th>{season.TeamID}</th>
+                        <th>{season.Year}</th>
+                        <th>{season.Wins}</th>
+                        <th>{season.Losses}</th>
+                    </tr>
+                ))}
+            </StatsTable>
+        </>
     )
 }
 

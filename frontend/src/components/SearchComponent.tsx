@@ -1,23 +1,53 @@
 import { ChangeEvent, useEffect, useState } from "react"
+import SERVER_URL from "../scripts/server"
+import SearchResult from "../types/SearchResult"
+import { useNavigate } from "react-router-dom"
 
-type SearchComponentProps = {
-    // nothingrn:string
-}
-function SearchComponent(props:SearchComponentProps) {
+function SearchComponent() {
+
+    const navigate = useNavigate()
 
     const [ value, setValue ] = useState("")
     const [ isDropdownOpen, setDropDown ] = useState(false)
-    const [ dropDownFocused, setDropDownFocus ] = useState(false)
+    const [ results, setResults ] = useState<SearchResult[]>([])
+    const [ selectedResult, setSelectedResult ] = useState<SearchResult | null>(null)
 
     const handleChange = (event:ChangeEvent<HTMLInputElement>) => {
         setValue(event.target.value)
     }
 
     useEffect(() => {
+        async function fetchSearch() {
+            try {
+                const response = await fetch(SERVER_URL+'/search/'+value)
+                if(!response.ok) {
+                    throw new Error(response.statusText)
+                }
+                const data = await response.json()
+                setResults(data)
+            }
+            catch(error) {
+                console.error(error)
+            }
+        }
+        fetchSearch()
+    }, [value])
+
+    useEffect(() => {
         setDropDown(value!=="")
     }, [value])
 
-    const options = ["Option 1", "Option 2", "Option 3"]
+    useEffect(() => {
+        if(selectedResult) {
+            const link = '/'+selectedResult.ResultType+"/"+selectedResult.ID
+            console.log(selectedResult)
+            console.log("Navigating to " + link)
+            navigate(link)
+            setSelectedResult(null)
+            setDropDown(false)
+            setValue("")
+        }
+    }, [selectedResult, navigate, value])
 
     return (
         <>
@@ -38,11 +68,13 @@ function SearchComponent(props:SearchComponentProps) {
                 bg-white shadow-lg rounded max-w-sm w-full
                 transition delay-150 ease-in-out">
                 <ul className="w-full">
-                    {options.map((option) => (
+                    {results.map((result) => (
                         <li 
+                        key={result.ResultType+result.ID}
                         className="w-full hover:shadow-lg rounded p-2 
                         hover:bg-gray-100 hover:scale-110 cursor-pointer"
-                        >{option}</li>
+                        onMouseDown={() => setSelectedResult(result)}
+                        >{result.Name}</li>
                     ))}
                 </ul>
                 </div>
