@@ -8,14 +8,14 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func GetTeam(w http.ResponseWriter, r *http.Request, db *db.DB) {
+func GetPlayer(w http.ResponseWriter, r *http.Request, db *db.DB) {
 	vars := mux.Vars(r)
 	id := vars["id"]
 
-	player, err := db.GetTeam(id)
+	player, err := db.GetPlayer(id)
 
 	if err != nil {
-		http.Error(w, "Team does not exist", http.StatusNotFound)
+		http.Error(w, "Player does not exist", http.StatusNotFound)
 		return
 	}
 

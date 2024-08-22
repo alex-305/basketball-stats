@@ -1,6 +1,3 @@
 package queries
 
-func Player() string {
-	return `
-	SELECT * FROM player WHERE name=$1`
-}
+const Player = `SELECT id, name, birthday FROM players WHERE id=$1`
