@@ -38,3 +38,12 @@ td, th {
 table, th, td {
   border: none;
 }
+
+input[type=text], select {
+  width: 100%;
+  padding: 6px 10px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}

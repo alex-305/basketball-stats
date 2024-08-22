@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react"
-import type PlayerSeason from "../types/PlayerSeason"
 import SERVER_URL from "../scripts/server"
+import type TeamSeason from "../types/TeamSeason"
 
-export type PlayerSeasonsTable = {
+export type TeamSeasonsTableProps = {
     id:string
 }
 
-function PlayerSeasonsTable(props:PlayerSeasonsTable) {
-    const seenYears = new Set()
-    const dupYears = new Set()
+function TeamSeasonsTable(props:TeamSeasonsTableProps) {
 
     const getBGColor = (year:string) => {
         const gradient = "bg-gradient-to-r"
@@ -17,18 +15,16 @@ function PlayerSeasonsTable(props:PlayerSeasonsTable) {
          ' from-red-100 to-amber-100 ')
     }
 
-    const labels = ["Year", "Team", "Age", "Position", "GP", "MP", "Steals", "Blocks", "Rebounds", "Assists", "Points"]
+    const labels = ["Team","Year", "Wins", "Losses"]
 
-    const [seasons, setSeasons] = useState<PlayerSeason[]>([])
+    const [seasons, setSeasons] = useState<TeamSeason[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
     useEffect(() => {
         async function fetchSeasons() {
             try {
-                console.log("GOT HERE")
-                console.log(props.id)
-                const response = await fetch(SERVER_URL+'/player/'+ props.id +'/seasons')
+                const response = await fetch(SERVER_URL+'/team/'+ props.id +'/seasons')
                 if(!response.ok) {
                     throw new Error(response.statusText)
                 }
@@ -46,14 +42,6 @@ function PlayerSeasonsTable(props:PlayerSeasonsTable) {
         fetchSeasons()
     }, [])
 
-    seasons.forEach((val:PlayerSeason) => {
-        if(seenYears.has(val.Year)) {
-            dupYears.add(val.Year)
-        } else {
-            seenYears.add(val.Year)
-        }
-    })
-
     if(loading) return <p>Loading...</p>
     if(error) return <p>Error</p>
 
@@ -68,19 +56,12 @@ function PlayerSeasonsTable(props:PlayerSeasonsTable) {
             </thead>
             <tbody>
             
-            {seasons ? seasons.map((item:PlayerSeason) => (
-                <tr key={item.Year+item.TeamID} className={getBGColor(item.Year)}>
-                    <th>{item.Year}</th>
-                    <th>{item.TeamID}</th>
-                    <th>{item.Age}</th>
-                    <th>{item.Position}</th>
-                    <th>{item.GamesPlayed}</th>
-                    <th>{item.MinutesPlayed}</th>
-                    <th>{item.StealsPerGame.toFixed(1)}</th>
-                    <th>{item.BlocksPerGame.toFixed(1)}</th>
-                    <th>{item.ReboundsPerGame.toFixed(1)}</th>
-                    <th>{item.AssistsPerGame.toFixed(1)}</th>
-                    <th>{item.PointsPerGame.toFixed(1)}</th>
+            {seasons ? seasons.map((season:TeamSeason) => (
+                <tr key={season.Year} className={getBGColor(season.Year)}>
+                    <th>{season.TeamID}</th>
+                    <th>{season.Year}</th>
+                    <th>{season.Wins}</th>
+                    <th>{season.Losses}</th>
                 </tr>
             )) 
             : <></>}
@@ -89,4 +70,4 @@ function PlayerSeasonsTable(props:PlayerSeasonsTable) {
     )
 }
 
-export default PlayerSeasonsTable
+export default TeamSeasonsTable

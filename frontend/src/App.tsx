@@ -1,6 +1,5 @@
 import NavBar from './components/NavBar'
 import './App.css'
-import GuessingGame from './components/GuessingGame'
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import Players from './pages/Players'
