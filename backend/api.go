@@ -54,4 +54,6 @@ func (s *APIServer) defineRoutes(r *mux.Router) {
 	r.HandleFunc("/team/{id}", makeHttp(handlers.GetTeam, s.DB))
 	r.HandleFunc("/team/{id}/seasons", makeHttp(handlers.GetTeamSeasons, s.DB))
 	r.HandleFunc("/search/{query}", makeHttp(handlers.GetSearch, s.DB))
+	// r.HandleFunc("/players", makeHttp(handlers, s.DB))
+	// r.HandleFunc("/teams", makeHttp(handlers,s.DB))
 }
