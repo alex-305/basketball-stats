@@ -17,3 +17,11 @@ export async function fetchPlayer(id:string) {
     console.log(response)
     return await response.json()
 }
+
+export async function fetchRandPlayers() {
+    const response = await fetch(SERVER_URL+'/rand/players')
+    if(!response.ok) {
+        throw new Error(response.statusText)
+    }
+    return await response.json()
+}

@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from "react"
-import SERVER_URL from "../scripts/server"
-import type TeamSeason from "../types/TeamSeason"
-
+import React from "react"
 export type StatsTableProps = {
     labels:string[]
-    header:string
+    header:React.ReactNode
     children?: React.ReactNode
 }
 

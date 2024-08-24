@@ -1,4 +1,3 @@
-import PlayerSeason from "../types/PlayerSeason";
 import SERVER_URL from "./server";
 
 export async function fetchRandPlayerSeasons() {

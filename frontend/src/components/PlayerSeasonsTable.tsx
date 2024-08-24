@@ -3,6 +3,8 @@ import type PlayerSeason from "../types/PlayerSeason"
 import StatsTable from "./StatsTable"
 import Player from "../types/Player"
 import { fetchPlayer, fetchPlayerSeasons } from "../scripts/fetchPlayer"
+// import { fetchTeam } from "../scripts/fetchTeam"
+// import Team from "../pages/Team"
 
 export type PlayerSeasonsTable = {
     id:string
@@ -14,6 +16,17 @@ function PlayerSeasonsTable(props:PlayerSeasonsTable) {
     const [seasons, setSeasons] = useState<PlayerSeason[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
+    // const [teamExists, setTeamExists ] = useState(null)
+
+    // async function teamDoesExist(id:string) {
+    //     try {
+    //         await fetchTeam(id)
+    //         return true
+    //     } catch(err:any) {
+    //         console.error(err)
+    //         return false
+    //     }
+    // }
 
     async function fetch() {
         try {
@@ -71,11 +84,11 @@ function PlayerSeasonsTable(props:PlayerSeasonsTable) {
                     <th>{item.Age}</th>
                     <th>{item.Position}</th>
                     <th>{item.GamesPlayed}</th>
-                    <th>{item.StealsPerGame.toFixed(1)}</th>
-                    <th>{item.BlocksPerGame.toFixed(1)}</th>
-                    <th>{item.ReboundsPerGame.toFixed(1)}</th>
-                    <th>{item.AssistsPerGame.toFixed(1)}</th>
-                    <th>{item.PointsPerGame.toFixed(1)}</th>
+                    <th>{item.StealsPerGame ? item.StealsPerGame.toFixed(1) : "--"}</th>
+                    <th>{item.BlocksPerGame ? item.BlocksPerGame.toFixed(1) : "--"}</th>
+                    <th>{item.ReboundsPerGame ? item.ReboundsPerGame.toFixed(1) : "--"}</th>
+                    <th>{item.AssistsPerGame ? item.AssistsPerGame.toFixed(1) : "--"}</th>
+                    <th>{item.PointsPerGame ? item.PointsPerGame.toFixed(1) : "--"}</th>
                 </tr>
             ))}
         </StatsTable>

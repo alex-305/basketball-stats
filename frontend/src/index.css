@@ -55,3 +55,7 @@ thead tr:first-child th:first-child {
 thead tr:first-child th:last-child {
   border-top-right-radius: 5px;
 }
+
+a {
+  @apply text-blue-500 hover:text-purple-500;
+}
