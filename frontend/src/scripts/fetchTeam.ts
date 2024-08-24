@@ -1,4 +1,4 @@
-import Team from "../types/Team"
+import Team, { TeamWithStats } from "../types/Team"
 import TeamSeason from "../types/TeamSeason"
 import SERVER_URL from "./server"
 
@@ -17,4 +17,13 @@ export async function fetchTeam(id:string):Promise<Team> {
     }
     console.log(response)
     return await response.json()
+}
+
+export async function fetchTeams():Promise<TeamWithStats[]> {
+    const res = await fetch(SERVER_URL+'/teams')
+    if(!res.ok) {
+        throw new Error(res.statusText)
+    }
+    console.log(res)
+    return await res.json()
 }
