@@ -20,3 +20,15 @@ func (db *DB) GetTeam(id string) (models.Team, error) {
 	}
 	return team, nil
 }
+
+func (db *DB) GetTeams() ([]models.TeamWithStats, error) {
+	rows, err := db.Query(queries.RandTeam)
+
+	teams, err := scan.TeamsWithStats(rows)
+
+	if err != nil {
+		log.Printf("%s", err)
+		return []models.TeamWithStats{}, err
+	}
+	return teams, nil
+}
