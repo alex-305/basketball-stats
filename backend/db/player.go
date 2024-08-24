@@ -19,3 +19,21 @@ func (db *DB) GetPlayer(id string) (models.Player, error) {
 	}
 	return player, nil
 }
+
+func (db *DB) GetRandPlayers() ([]models.PlayerWithAvgs, error) {
+	rows, err := db.Query(queries.RandPlayers)
+
+	if err != nil {
+		return []models.PlayerWithAvgs{}, err
+	}
+
+	p, err := scan.PlayersWithAvgs(rows)
+
+	if err != nil {
+		log.Printf("%s", err)
+		return []models.PlayerWithAvgs{}, err
+	}
+
+	return p, nil
+
+}

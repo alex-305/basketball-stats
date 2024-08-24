@@ -50,10 +50,9 @@ func makeHttp(fn handlerFunc, d *db.DB) httpFunc {
 func (s *APIServer) defineRoutes(r *mux.Router) {
 	r.HandleFunc("/player/{id}/seasons", makeHttp(handlers.GetPlayerSeasons, s.DB))
 	r.HandleFunc("/rand/player/seasons", makeHttp(handlers.GetRandPlayerSeason, s.DB))
+	r.HandleFunc("/rand/players", makeHttp(handlers.GetRandPlayers, s.DB))
 	r.HandleFunc("/player/{id}", makeHttp(handlers.GetPlayer, s.DB))
 	r.HandleFunc("/team/{id}", makeHttp(handlers.GetTeam, s.DB))
 	r.HandleFunc("/team/{id}/seasons", makeHttp(handlers.GetTeamSeasons, s.DB))
 	r.HandleFunc("/search/{query}", makeHttp(handlers.GetSearch, s.DB))
-	// r.HandleFunc("/players", makeHttp(handlers, s.DB))
-	// r.HandleFunc("/teams", makeHttp(handlers,s.DB))
 }
