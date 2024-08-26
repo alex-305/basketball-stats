@@ -1,6 +1,4 @@
-import Icon from "@mdi/react"
 import { TeamWithStats } from "../types/Team"
-import { mdiReplay } from "@mdi/js"
 import { useEffect, useState } from "react"
 import { fetchTeams } from "../scripts/fetchTeam"
 import { GetBGColorOfTable } from "../scripts/misc"
