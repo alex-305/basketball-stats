@@ -8,10 +8,9 @@ export type StatsTableProps = {
 function StatsTable(props:StatsTableProps) {
     return (
         <div className="mx-20">
-            <div className="text-center mx-auto text-2xl rounded w-fit 
-            bg-gradient-to-r from-sky-300 to-stone-300 px-3 my-2 shadow-lg"
+            <div className="text-center mx-auto text-2xl my-2"
             >{props.header}</div>
-            <table className="shadow-xl mb-10 rounded-lg">
+            <table className=" mb-10 rounded-lg">
                 <thead>
                     <tr className="bg-gradient-to-r from-cyan-500 to-blue-500">
                         {props.labels.map((item) => (

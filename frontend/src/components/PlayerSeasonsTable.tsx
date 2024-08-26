@@ -16,17 +16,6 @@ function PlayerSeasonsTable(props:PlayerSeasonsTable) {
     const [seasons, setSeasons] = useState<PlayerSeason[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
-    // const [teamExists, setTeamExists ] = useState(null)
-
-    // async function teamDoesExist(id:string) {
-    //     try {
-    //         await fetchTeam(id)
-    //         return true
-    //     } catch(err:any) {
-    //         console.error(err)
-    //         return false
-    //     }
-    // }
 
     async function fetch() {
         try {
@@ -79,16 +68,16 @@ function PlayerSeasonsTable(props:PlayerSeasonsTable) {
             header={player?.Name ?? ""}>
             {seasons && seasons.map((item:PlayerSeason) => (
                 <tr key={item.Year+item.TeamID} className={getBGColor(item.Year)}>
-                    <th>{item.Year}</th>
-                    <th>{item.TeamID}</th>
-                    <th>{item.Age}</th>
-                    <th>{item.Position}</th>
-                    <th>{item.GamesPlayed}</th>
-                    <th>{item.StealsPerGame ? item.StealsPerGame.toFixed(1) : "--"}</th>
-                    <th>{item.BlocksPerGame ? item.BlocksPerGame.toFixed(1) : "--"}</th>
-                    <th>{item.ReboundsPerGame ? item.ReboundsPerGame.toFixed(1) : "--"}</th>
-                    <th>{item.AssistsPerGame ? item.AssistsPerGame.toFixed(1) : "--"}</th>
-                    <th>{item.PointsPerGame ? item.PointsPerGame.toFixed(1) : "--"}</th>
+                    <td>{item.Year}</td>
+                    <td>{item.TeamID}</td>
+                    <td>{item.Age}</td>
+                    <td>{item.Position}</td>
+                    <td>{item.GamesPlayed}</td>
+                    <td>{item.StealsPerGame ? item.StealsPerGame.toFixed(1) : "--"}</td>
+                    <td>{item.BlocksPerGame ? item.BlocksPerGame.toFixed(1) : "--"}</td>
+                    <td>{item.ReboundsPerGame ? item.ReboundsPerGame.toFixed(1) : "--"}</td>
+                    <td>{item.AssistsPerGame ? item.AssistsPerGame.toFixed(1) : "--"}</td>
+                    <td>{item.PointsPerGame ? item.PointsPerGame.toFixed(1) : "--"}</td>
                 </tr>
             ))}
         </StatsTable>

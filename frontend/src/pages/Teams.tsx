@@ -31,32 +31,23 @@ function Teams() {
     if(loading) return <p>Loading...</p>
     if(error) return <p>Error</p>
 
-    function Randomize() {
-        return (
-            <button onClick={()=> fetch()} className="flex px-0 py-0 mx-0 my-0">
-                <Icon className="flex align-center" path={mdiReplay} size={1}/>
-                <span>Randomize</span>
-            </button>
-        )
-    }
-
     function WinLossPct(wins:number, losses:number):string {
         return ((wins/(losses+wins))*100).toFixed(1) + "%"
     }
 
     return (
         <>
-            <StatsTable labels={labels} header={Randomize()}>
+            <StatsTable labels={labels} header={<>Teams</>}>
             {teams && teams.map((item:TeamWithStats, index:number) => (
                 <tr key={item.ID} className={GetBGColorOfTable(index+1)}>
-                    <th>
+                    <td>
                         <a 
                     href={"/team/"+item.ID}>{item.Name}
-                    </a></th>
-                    <th>{WinLossPct(item.Wins, item.Losses)}</th>
-                    <th>{item.Wins}</th>
-                    <th>{item.Losses}</th>
-                    <th>{item.SeasonCount}</th>
+                    </a></td>
+                    <td>{WinLossPct(item.Wins, item.Losses)}</td>
+                    <td>{item.Wins}</td>
+                    <td>{item.Losses}</td>
+                    <td>{item.SeasonCount}</td>
                 </tr>
             ))}
             </StatsTable>

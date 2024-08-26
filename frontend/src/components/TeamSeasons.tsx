@@ -56,10 +56,10 @@ function TeamSeasonsTable(props:TeamSeasonsTableProps) {
             header={team?.Name ?? ""}>
                 {seasons && seasons.map((season:TeamSeason) => (
                     <tr key={season.Year} className={getBGColor(season.Year)}>
-                        <th>{season.TeamID}</th>
-                        <th>{season.Year}</th>
-                        <th>{season.Wins}</th>
-                        <th>{season.Losses}</th>
+                        <td>{season.TeamID}</td>
+                        <td>{season.Year}</td>
+                        <td>{season.Wins}</td>
+                        <td>{season.Losses}</td>
                     </tr>
                 ))}
             </StatsTable>
