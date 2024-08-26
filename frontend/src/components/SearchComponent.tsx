@@ -68,14 +68,14 @@ function SearchComponent() {
                 bg-white shadow-lg rounded max-w-sm w-full
                 transition delay-150 ease-in-out">
                 <ul className="w-full">
-                    {results.map((result) => (
+                    {results.length > 0 ? results.map((result) => (
                         <li 
                         key={result.ResultType+result.ID}
                         className="w-full hover:shadow-lg rounded p-2 
                         hover:bg-gray-100 hover:scale-110 cursor-pointer"
                         onMouseDown={() => setSelectedResult(result)}
                         >{result.Name}</li>
-                    ))}
+                    )) : <li className="w-full rounded p-2 ">No results found.</li>}
                 </ul>
                 </div>
             )}

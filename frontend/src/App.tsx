@@ -1,7 +1,7 @@
 import NavBar from './components/NavBar'
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
-import Home from './pages/Home'
+import Index from './pages/Index'
 import Players from './pages/Players'
 import Teams from './pages/Teams'
 import Player from './pages/Player'
@@ -15,7 +15,7 @@ function App() {
         <NavBar/>
       </div>
     <Routes>
-      <Route path="/" element={<Home/>}/>
+      <Route path="/" element={<Index/>}/>
       <Route path="/players" element={<Players/>}/>
       <Route path="/teams" element={<Teams/>}/>
       <Route path="/player/:id" element={<Player/>}/>
